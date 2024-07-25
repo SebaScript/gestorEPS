@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './log-in.html', './sign-up.html'],
+  content: [
+    './src/**/*.html',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        aculonica: ['Aclonica', 'sans-serif'],
+        ubuntu: ['Ubuntu', 'sans-serif']
+      },
+    },
   },
   plugins: [],
 }
-
