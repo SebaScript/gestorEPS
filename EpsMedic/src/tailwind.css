@@ -52,3 +52,20 @@ html, body {
   @apply from-purple-500 via-purple-600 to-purple-700; /* Color morado */
   @apply shadow-purple-500/50 dark:shadow-purple-800/80;
 }
+
+
+.gradient-top-right {
+  position: relative;
+}
+
+.gradient-top-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  background: linear-gradient(to bottom left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
