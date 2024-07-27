@@ -1,18 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/medicLogo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Supra Menu</title>
     <link rel="stylesheet" href="./tailwind.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap" rel="stylesheet">
-</head>
-<body class="m-0 p-0 bg-wallpaper">
-    <div class="fixed top-0 left-0 right-0 bg-purple-400 p-5 flex items-start h-20 border-4 border-solid border-purple-700 ">
-        <h1 class=" font-aculonica text-white text-4xl ml-5 mt-15">Supra Eps</h1>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="m-0 p-0 bg-wallpaper flex">
+    <!-- Column 1 -->
+    <div
+      class="w-1/2 h-screen border-r-4 border-purple-700 flex items-center justify-center relative"
+    >
+      <div
+        class="fixed top-0 left-0 right-0 bg-purple-400 p-5 flex items-start h-25 border-4 border-solid border-purple-700"
+      >
+      <img src="/mainlogo.png" alt="Logo" class="w-12 h-15 mr-3">
+
+        <h1 class="font-aculonica text-white text-5xl ml-5 mt-13">Supra Eps</h1>
+      </div>
+      <div class="bg-white p-10 rounded-lg shadow-lg h-[500px] w-[400px]">
+        <h1 class="font-thin text-4xl ml-5 mt-15">
+          Bienvenido a <br />
+          <strong class="text-purple-700">Supra EPS!</strong> ,<br />hoy es <br /><span class="text-blue-600 " id="fecha-actual"></span>
+          <br/>
+          <br/>
+          A continuación, veras las ips mas cercanas.
+        </h1>
+      </div>
     </div>
-</body>
+
+    <!-- Column 2 -->
+    <div class="w-1/2 h-screen flex items-center justify-center relative">
+      <div class="fixed top-20 right-30 p-5 flex items-center h-20">
+        <button id=sura class="btn-blue">Sura</button>
+        <button id=nuevaeps class="btn-red">Nueva EPS</button>
+        <button id=saludtotal class="btn-yellow">Salud total</button>
+        <button id=coomeva class="btn-green">Coomeva</button>
+        <button id=hospital class="btn-purple">Hospitales</button>
+      </div>
+      <div class="bg-white p-10 rounded-lg shadow-lg h-[650px] w-[800px] border-2 border-gray-300">
+        <div id="map" class="w-full h-full rounded-lg"></div>
+      </div>
+    </div>
+
+    <script type="module" src="GoogleMap.js"></script>
+    <script>
+      const fechaActual = new Date();
+      const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const fechaFormateada = fechaActual.toLocaleDateString('es-CO', opcionesFecha);
+
+      document.getElementById('fecha-actual').textContent = fechaFormateada;
+    </script>
+  </body>
 </html>

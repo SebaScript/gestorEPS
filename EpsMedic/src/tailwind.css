@@ -14,3 +14,41 @@ html, body {
     background-position: center;
     background-repeat: no-repeat;
   }
+
+ /* styles.css */
+
+/* Estilo base del botón */
+.btn-base {
+  @apply text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2;
+}
+
+/* Variantes de color */
+.btn-blue {
+  @apply btn-base; /* Aplica el estilo base del botón */
+  @apply from-blue-500 via-blue-600 to-blue-700; /* Color azul */
+  @apply shadow-blue-500/50 dark:shadow-blue-800/80;
+}
+
+.btn-red {
+  @apply btn-base; /* Aplica el estilo base del botón */
+  @apply from-red-500 via-red-600 to-red-700; /* Color rojo */
+  @apply shadow-red-500/50 dark:shadow-red-800/80;
+}
+
+.btn-green {
+  @apply btn-base; /* Aplica el estilo base del botón */
+  @apply from-teal-500 via-teal-600 to-green-700; /* Color verde */
+  @apply shadow-green-500/50 dark:shadow-green-800/80;
+}
+
+.btn-yellow {
+  @apply btn-base; /* Aplica el estilo base del botón */
+  @apply from-yellow-500 via-yellow-600 to-yellow-700; /* Color amarillo */
+  @apply shadow-yellow-500/50 dark:shadow-yellow-800/80;
+}
+
+.btn-purple {
+  @apply btn-base; /* Aplica el estilo base del botón */
+  @apply from-purple-500 via-purple-600 to-purple-700; /* Color morado */
+  @apply shadow-purple-500/50 dark:shadow-purple-800/80;
+}
