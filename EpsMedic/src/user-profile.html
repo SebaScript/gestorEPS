@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/medicLogo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agendar cita</title>
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="shortcut icon" href="public/mainlogo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="flex flex-col h-screen">
+      <div class="bg-purple-400 p-5 flex items-center justify-between border-b-4 border-solid border-purple-700">
+        <div class = "flex items-center">
+          <img src="/mainlogo.png" alt="Logo" class="w-12 h-15 mr-3">
+          <h1 class="font-aculonica text-white text-5xl Aclonica">Supra Eps</h1>
+        </div>
+        <div class="flex items-center">
+          <a href="index.html"><button id="sura" class="btn-base">Menú principal</button></a>
+          <a href="user-profile.html"><img class="w-12" src="public/user-icon.svg" alt="Perfil de usuario"></a>
+        </div>
+      </div>
+    <script>
+      const fechaActual = new Date();
+      const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const fechaFormateada = fechaActual.toLocaleDateString('es-CO', opcionesFecha);
+      document.getElementById('fecha-actual').textContent = fechaFormateada;
+    </script>
+  </body>
 </html>
