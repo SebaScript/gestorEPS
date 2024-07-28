@@ -19,6 +19,9 @@
           <button type="button" id="login-button">
             Login
           </button>
+          <button type="button" id="signup-button">
+            Sign Up
+          </button>
         </div>
       </div>
     </div>
@@ -58,6 +61,10 @@
 
       document.getElementById("login-button").addEventListener("click", function () {
         auth0.authorize();
+      });
+
+      document.getElementById("signup-button").addEventListener("click", function () {
+        window.location.href = 'https://dev-hwvaiwpn86l5fpxt.us.auth0.com/u/signup?state=hKFo2SBLcnZOZlZOWTNadDZaNXVCRXFkTDZsTkxXWVVwb0FTNqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHhLbG0tWDk3YTlrQVp0UmtEVjdCa1JqY2RhQ3ZIdTBUo2NpZNkgME4xYXRZTW55WUZzUFJsTkRjV3ZJYk0wSTZOaDdHTUU';
       });
     </script>
   </body>

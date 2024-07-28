@@ -120,3 +120,16 @@ html, body {
 #login-button:hover {
   background: linear-gradient(to right, #2563eb, #9333ea); /* Degradado más oscuro al pasar el cursor */
 }
+
+#signup-button {
+  background: linear-gradient(to right, #3b82f6, #55f778); /* Degradado de azul a morado */
+  color: white; /* Texto blanco */
+  padding: 1.5rem; /* Padding grande */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  font-size: 1.875rem; /* Tamaño de texto grande */
+  transition: background 0.3s ease; /* Transición suave para el hover */
+}
+
+#signup-button:hover {
+  background: linear-gradient(to right, #2563eb, #33ea95); /* Degradado más oscuro al pasar el cursor */
+}
