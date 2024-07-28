@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Iniciar sesión</h2>
+    <form id="login-form">
+        <label for="document">Documento:</label>
+        <input type="text" id="document" name="document" required><br><br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+        import { getDatabase, ref, set, onValue, remove, query, orderByChild, equalTo, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        const firebaseConfig = {
+        apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
+        authDomain: "supra-eps.firebaseapp.com",
+        databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
+        projectId: "supra-eps",
+        storageBucket: "supra-eps.appspot.com",
+        messagingSenderId: "432086709372",
+        appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
+        measurementId: "G-8K3XYXSMX1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase()
+
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const documentValue = document.getElementById('document').value;
+            const passwordValue = document.getElementById('password').value;
+
+            const userRef = ref(database, 'users/' + documentValue);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === passwordValue) {
+                        window.open("main.html")
+                    } else {
+                        alert('Contraseña incorrecta');
+                    }
+                } else {
+                    alert('No se encontró el usuario, verifica la información o registrate');
+                }
+            }).catch((error) => {
+                alert('Error: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
