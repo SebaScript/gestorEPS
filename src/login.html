@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supra Menu</title>
+    <link rel="stylesheet" href="../public/tailwind.css" />
+    <link rel="shortcut icon" href="/mainlogo.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="flex flex-col h-screen">
+      <div
+        class="bg-purple-400 p-5 flex items-center justify-between border-b-4 border-solid border-purple-700"
+      >
+        <div class="flex items-center">
+          <img src="../public/mainlogo.png" alt="Logo" class="w-12 h-15 mr-3" />
+          <h1 class="font-aculonica text-white text-5xl Aclonica">Supra Eps</h1>
+        </div>
+        <div class="flex items-center">
+          <a href="new-appointment.html"
+            ><button id="sura" class="btn-base">Agendar cita</button></a
+          >
+          <a href="user-profile.html"
+            ><img
+              class="w-12"
+              src="public/user-icon.svg"
+              alt="Perfil de usuario"
+          /></a>
+        </div>
+      </div>
+      <div class="flex flex-1 overflow-hidden">
+        <!-- Columna 1 -->
+        <div
+          class="w-1/2 border-r-5 border-purple-700 flex items-center justify-center bg-gradient-to-r from-purple-200 via-transparent to-transparent"
+        >
+          <div class="bg-white p-10 rounded-lg shadow-2xl h-[500px] w-[400px]">
+            <h1 class="font-thin text-4xl ml-5">
+              Bienvenido a <br />
+              <strong class="text-purple-700">Supra EPS!</strong> ,<br />hoy es
+              <br /><span class="text-blue-600" id="fecha-actual"></span>
+              <br />
+              <br />
+              A continuación, verás las ips más cercanas.
+            </h1>
+          </div>
+          <!-- Botón de Logout -->
+          <div class="mt-4 flex justify-center">
+            <button
+              id="logout-button"
+              class="btn-logout bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+        <!-- Columna 2 -->
+        <div class="w-1/2 flex flex-col">
+          <div
+            class="flex-1 bg-white p-5 rounded-lg shadow-lg border-2 border-gray-300 overflow-hidden"
+          >
+            <div id="map" class="w-full h-full rounded-lg"></div>
+          </div>
+          <div
+            class="p-5 flex justify-center gap-2 border-t-w-1/2 border-r-5 border-purple-700 items-center bg-gradient-to-r from-purple-100 via-transparent to-transparent bg-purple-200"
+          >
+            <button id="sura" class="btn-blue">Sura</button>
+            <button id="nuevaeps" class="btn-red">Nueva EPS</button>
+            <button id="saludtotal" class="btn-yellow">Salud total</button>
+            <button id="coomeva" class="btn-green">Coomeva</button>
+            <button id="hospital" class="btn-purple">Hospitales</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../scripts/GoogleMap.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0/9.16.0/auth0.min.js"></script>
+    <script>
+      var auth0 = new auth0.WebAuth({
+        domain: "dev-hwvaiwpn86l5fpxt.us.auth0.com",
+        clientID: "0N1atYMnyYFsPRlNDcWvIbM0I6Nh7GME",
+        responseType: "token id_token",
+        scope: "openid profile email",
+        redirectUri: window.location.origin + "/index.html",
+      });
+    
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", function () {
+          auth0.logout({
+            returnTo: window.location.origin + "/login.html", // Asegúrate de usar la URL correcta
+            clientID: "0N1atYMnyYFsPRlNDcWvIbM0I6Nh7GME",
+          });
+        });
+    
+      const fechaActual = new Date();
+      const opcionesFecha = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const fechaFormateada = fechaActual.toLocaleDateString(
+        "es-CO",
+        opcionesFecha
+      );
+      document.getElementById("fecha-actual").textContent = fechaFormateada;
+    </script>
+    
+  </body>
+</html>

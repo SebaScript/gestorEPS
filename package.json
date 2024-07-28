@@ -1,0 +1,36 @@
+{
+  "name": "epsmedic",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-json-pretty": "^2.2.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4",
+    "dotenv": "^16.4.5"
+  },
+  "scripts": {
+    "dev": "vite --open login.html",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "vite": "^5.3.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
+}
