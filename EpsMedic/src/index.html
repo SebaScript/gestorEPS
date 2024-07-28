@@ -33,17 +33,18 @@
           <br/>
           A continuación, veras las ips mas cercanas.
         </h1>
+        <button id="logout-button" class="btn-red mt-5">Logout</button>
       </div>
     </div>
 
     <!-- Column 2 -->
     <div class="w-1/2 h-screen flex items-center justify-center relative">
       <div class="fixed top-20 right-30 p-5 flex items-center h-20">
-        <button id=sura class="btn-blue">Sura</button>
-        <button id=nuevaeps class="btn-red">Nueva EPS</button>
-        <button id=saludtotal class="btn-yellow">Salud total</button>
-        <button id=coomeva class="btn-green">Coomeva</button>
-        <button id=hospital class="btn-purple">Hospitales</button>
+        <button id="sura" class="btn-blue">Sura</button>
+        <button id="nuevaeps" class="btn-red">Nueva EPS</button>
+        <button id="saludtotal" class="btn-yellow">Salud total</button>
+        <button id="coomeva" class="btn-green">Coomeva</button>
+        <button id="hospital" class="btn-purple">Hospitales</button>
       </div>
       <div class="bg-white p-10 rounded-lg shadow-lg h-[650px] w-[800px] border-2 border-gray-300">
         <div id="map" class="w-full h-full rounded-lg"></div>
@@ -51,12 +52,29 @@
     </div>
 
     <script type="module" src="GoogleMap.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
     <script>
       const fechaActual = new Date();
       const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const fechaFormateada = fechaActual.toLocaleDateString('es-CO', opcionesFecha);
 
       document.getElementById('fecha-actual').textContent = fechaFormateada;
+
+      // Configura Auth0
+      var auth0 = new auth0.WebAuth({
+        domain: 'dev-hwvaiwpn86l5fpxt.us.auth0.com',
+        clientID: '0N1atYMnyYFsPRlNDcWvIbM0I6Nh7GME',
+        responseType: 'token id_token',
+        scope: 'openid profile email',
+        redirectUri: window.location.origin + '/index.html'
+      });
+
+      document.getElementById('logout-button').addEventListener('click', function() {
+        auth0.logout({
+          returnTo: window.location.origin + '/login.html', // Redirige a la página de login después del logout
+          clientID: '0N1atYMnyYFsPRlNDcWvIbM0I6Nh7GME'
+        });
+      });
     </script>
   </body>
 </html>

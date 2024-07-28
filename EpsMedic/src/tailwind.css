@@ -52,3 +52,71 @@ html, body {
   @apply from-purple-500 via-purple-600 to-purple-700; /* Color morado */
   @apply shadow-purple-500/50 dark:shadow-purple-800/80;
 }
+
+
+/* Login */
+
+#contenedor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#contenedor > div {
+  width: 50%;
+}
+
+#contenedor #divPortada {
+  height: 100vh;
+  display: flex;
+  margin: auto;
+}
+
+#contenedor #divPortada #title {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translateX(-50%); 
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 80px;
+  font-weight: bold;
+}
+
+#contenedor #divLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Asegúrate de que el contenedor tenga una altura definida */
+}
+
+#contenedor #divLogin #h1Login{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 80px;
+  font-weight: bold;
+  display: flex;
+  align-self: flex-start;
+}
+
+#contenedor #divLogin #buttonLogin {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  justify-content: center;
+  display: flex;
+  background-color: #04AA6D; 
+  padding: 15px 32px;
+  font-size: 16px;
+}
+
+
+#login-button {
+  background: linear-gradient(to right, #3b82f6, #a855f7); /* Degradado de azul a morado */
+  color: white; /* Texto blanco */
+  padding: 1.5rem; /* Padding grande */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  font-size: 1.875rem; /* Tamaño de texto grande */
+  transition: background 0.3s ease; /* Transición suave para el hover */
+}
+
+#login-button:hover {
+  background: linear-gradient(to right, #2563eb, #9333ea); /* Degradado más oscuro al pasar el cursor */
+}
