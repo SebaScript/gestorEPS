@@ -49,7 +49,7 @@
                     const userData = snapshot.val();
                     if (userData.password === passwordValue) {
                         localStorage.setItem('userId', documentValue)
-                        window.location.href = "pages/main.html";
+                        window.location.href = "main.html";
                     } else {
                         alert('Contraseña incorrecta');
                     }
