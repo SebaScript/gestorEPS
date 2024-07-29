@@ -48,7 +48,8 @@
                 if (snapshot.exists()) {
                     const userData = snapshot.val();
                     if (userData.password === passwordValue) {
-                        window.location.href = "pages/main.html";  // Cambia la ruta si es necesario
+                        localStorage.setItem('userId', documentValue)
+                        window.location.href = "pages/main.html";
                     } else {
                         alert('Contraseña incorrecta');
                     }
