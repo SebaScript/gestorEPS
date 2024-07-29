@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfíl</title>
+</head>
+<body>
+    <h1>Perfíl de usuario</h1>
+    <form id="edit-profile-form">
+        <label for="document">Documento:</label>
+        <input type="text" id="document" name="document" readonly><br><br>
+
+        <label for="username">Nombre:</label>
+        <input type="text" id="username" name="username" readonly><br><br>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="phone">Número de teléfono:</label>
+        <input type="text" id="phone" name="phone"><br><br>
+
+        <button type="submit">Guardar cambios</button>
+
+        <h3>Historia clínica</h3>
+        <label for="allergies">Alergias:</label>
+        <p id="allergies" name="allergies"></p><br><br>
+
+        <label for="illnesses">Enfermedades:</label>
+        <p id="illnesses" name="illnesses"></p><br><br>
+
+        <label for="surgeries">Cirugías:</label>
+        <p id="surgeries" name="surgeries"></p><br><br>
+
+        <label for="familyHistory">Antecedentes familiares</label>
+        <p id="familyHistory" name="familyHistory"></p><br><br>
+    </form>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+        import { getDatabase, ref, set, onValue, update, remove, query, orderByChild, equalTo, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
+        authDomain: "supra-eps.firebaseapp.com",
+        databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
+        projectId: "supra-eps",
+        storageBucket: "supra-eps.appspot.com",
+        messagingSenderId: "432086709372",
+        appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
+        measurementId: "G-8K3XYXSMX1"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase()
+
+        const editProfileForm = document.getElementById('edit-profile-form');
+
+        const userDocument = localStorage.getItem('userId');
+
+        const userRef = ref(database, 'users/' + userDocument);
+        get(userRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                document.getElementById('document').value = userDocument;
+                document.getElementById('email').value = userData.email || '';
+                document.getElementById('username').value = userData.name || '';
+                document.getElementById('phone').value = userData.phone || '';
+                document.getElementById('allergies').textContent = userData.clinicalHistory?.allergies || '';
+                document.getElementById('illnesses').textContent = userData.clinicalHistory?.illnesses || '';
+                document.getElementById('surgeries').textContent = userData.clinicalHistory?.surgeries || '';
+                document.getElementById('familyHistory').textContent = userData.clinicalHistory?.familyHistory || '';
+            } else {
+                alert('User data not found!');
+            }
+        }).catch((error) => {
+            alert('Error: ' + error.message);
+        });
+
+        editProfileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const emailValue = document.getElementById('email').value;
+            const phoneValue = document.getElementById('phone').value;
+            const allergiesValue = document.getElementById('allergies').value;
+            const illnessesValue = document.getElementById('illnesses').value;
+            const surgeriesValue = document.getElementById('surgeries').value;
+            const familyHistoryValue = document.getElementById('familyHistory').value;
+
+            update(userRef, {
+                email: emailValue,
+                phone: phoneValue,
+            })
+            .then(() => {
+                alert('Perfíl actualizado exitosamente');
+            })
+            .catch((error) => {
+                alert('Error: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
