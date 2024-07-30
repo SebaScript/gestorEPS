@@ -87,6 +87,16 @@
 
         const signupForm = document.getElementById('signup-form');
 
+        function validateDocumentValue(value) {
+            const regex = /^\d{8,}$/;
+            return regex.test(value);
+        }
+
+        function validatePasswordValue(value) {
+            const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            return regex.test(value);
+        }
+
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -94,6 +104,19 @@
             const emailValue = document.getElementById('email').value;
             const nameValue = document.getElementById('username').value;
             const passwordValue = document.getElementById('password').value;
+            console.log(passwordValue)
+
+            if (!validateDocumentValue(documentValue)) {
+                alert('El documento debe contener solo números y 8 caracteres como mínimo');
+                event.preventDefault();
+                return;
+            };
+
+            if (!validatePasswordValue(passwordValue)) {
+                alert('La coontraseña debe contener caracteres alfabeticos, numeros y 8 caracteres como mínimo');
+                event.preventDefault();
+                return;
+            };
 
             set(ref(database, 'users/' + documentValue), {
                 email: emailValue,
