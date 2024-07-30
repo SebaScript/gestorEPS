@@ -51,14 +51,13 @@
             <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Guardar cambios</button>
         </form>
 
-        <section>
-            <h2>Tus citas médicas</h2>
-            <div id="user-appointments-container"></div>
-        </section>
-
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Citas médicas</h3>
+            <div id="user-appointments-container" class="space-y-4"></div>
         <section class="mt-8">
             <h3 class="text-2xl font-semibold mb-4">Historia clínica</h3>
             <div class="space-y-4">
+                
                 <div>
                     <label for="allergies" class="block font-medium text-gray-700">Alergias:</label>
                     <p id="allergies" name="allergies" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
@@ -172,7 +171,7 @@
                         <p>Sede: ${value.headquarter}</p>
                         <p>Especialista: ${value.specialist}</p>
                         <p>Especialidad: ${value.speciality}</p>
-                        <button onclick="cancelAppointment('${key}')">Cancelar cita</button>
+                        <button onclick="cancelAppointment('${key}')" class="btn-blue">Cancelar cita</button>
                         <hr>
                     `;
                     userAppointmentsContainer.appendChild(appointmentDiv);

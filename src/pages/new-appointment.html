@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointments</title>
+    <link rel="stylesheet" href="./tailwind.css" />
+    
+
 </head>
 <body>
     <h2>Citas disponibles</h2>
@@ -62,7 +65,7 @@
                         <p>Sede: ${value.headquarter}</p>
                         <p>Especialista: ${value.specialist}</p>
                         <p>Especialidad: ${value.speciality}</p>
-                        <button onclick="bookAppointment('${key}')">Agendar cita</button>
+                        <button onclick="bookAppointment('${key}')" class="btn-blue">Agendar cita</button>
                         <hr>
                     `;
                     appointmentsContainer.appendChild(appointmentDiv);
