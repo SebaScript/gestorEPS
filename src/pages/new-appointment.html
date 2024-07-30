@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointments</title>
+    <title>Citas disponibles</title>
     <link rel="stylesheet" href="./tailwind.css" />
-    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
 </head>
-<body>
-    <h2>Citas disponibles</h2>
-    <div id="appointments-container"></div>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-customPurple p-5 flex items-center justify-between border-b-4 border-black">
+        <div class="flex items-center">
+            <img src="/mainlogo.png" alt="Logo" class="w-12 h-12 mr-3" />
+            <h1 class="font-aclonica text-white text-4xl">Supra Eps</h1>
+        </div>
+        <div class="flex space-x-4">
+            <a href="user-profile.html">
+                <button id="profile-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Mi perfil</button>
+            </a>
+            <a href="main.html">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Volver</button>
+            </a>
+        </div>
+    </header>
 
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
+    <main class="p-5 flex-1">
+        <h2 class="text-4xl font-bold mb-6">Citas disponibles</h2>
+        <div id="appointments-container" class="space-y-4 bg-white p-6 rounded-lg shadow-lg"></div>
+    </main>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
     (function(){
         emailjs.init({
@@ -40,12 +55,12 @@
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        const database = getDatabase()
+        const database = getDatabase();
 
         const userDocument = localStorage.getItem('userId');
         const userEmail = localStorage.getItem('useremail');
-        const userName = localStorage.getItem("username")
-        const userEps = localStorage.getItem('usereps')
+        const userName = localStorage.getItem("username");
+        const userEps = localStorage.getItem('usereps');
 
         const appointmentsContainer = document.getElementById('appointments-container');
 
@@ -53,22 +68,22 @@
         get(appointmentsRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const appointments = snapshot.val();
-                let available = false
+                let available = false;
                 for (const [key, value] of Object.entries(appointments)) {
                     if (value.eps === userEps) {
-                    available = true
-                    const appointmentDiv = document.createElement('div');
-                    appointmentDiv.setAttribute('data-id', key);
-                    appointmentDiv.innerHTML = `
-                        <p>Fecha: ${value.date}</p>
-                        <p>Hora: ${value.time}</p>
-                        <p>Sede: ${value.headquarter}</p>
-                        <p>Especialista: ${value.specialist}</p>
-                        <p>Especialidad: ${value.speciality}</p>
-                        <button onclick="bookAppointment('${key}')" class="btn-blue">Agendar cita</button>
-                        <hr>
-                    `;
-                    appointmentsContainer.appendChild(appointmentDiv);
+                        available = true;
+                        const appointmentDiv = document.createElement('div');
+                        appointmentDiv.setAttribute('data-id', key);
+                        appointmentDiv.innerHTML = `
+                            <p>Fecha: ${value.date}</p>
+                            <p>Hora: ${value.time}</p>
+                            <p>Sede: ${value.headquarter}</p>
+                            <p>Especialista: ${value.specialist}</p>
+                            <p>Especialidad: ${value.speciality}</p>
+                            <button onclick="bookAppointment('${key}')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Agendar cita</button>
+                            <hr>
+                        `;
+                        appointmentsContainer.appendChild(appointmentDiv);
                     }
                 }
 
@@ -113,10 +128,10 @@
                         console.error('Error al enviar el email', error);
                     });
                 }).catch((error) => {
-                    alert('Error removiendo cita' + error.message);
+                    alert('Error removiendo cita: ' + error.message);
                 });
             }).catch((error) => {
-                alert('Error agendando cita' + error.message);
+                alert('Error agendando cita: ' + error.message);
             });
         };
     </script>
