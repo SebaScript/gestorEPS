@@ -1,34 +1,43 @@
 window.initMap = function() {
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
-        center: { lat: -34.397, lng: 150.644 },
+        center: { lat: 6.2313, lng: -75.6106 }
     });
 
     let markers = [];
+    let currentLocationMarker = null; // Marker for current location
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
+    function setCurrentPosition() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
 
-                const userMarker = new google.maps.Marker({
-                    position: pos,
-                    map: map,
-                });
+                    if (currentLocationMarker) {
+                        currentLocationMarker.setMap(null);
+                    }
 
-                markers.push(userMarker);
-                map.setCenter(pos);
-            },
-            () => {
-                manejarErrorDeUbicación(true, map.getCenter(), map);
-            }
-        );
-    } else {
-        manejarErrorDeUbicación(false, map.getCenter(), map);
+                    currentLocationMarker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: "Tu ubicación actual",
+                    });
+
+                    map.setCenter(pos);
+                },
+                () => {
+                    manejarErrorDeUbicación(true, map.getCenter(), map);
+                }
+            );
+        } else {
+            manejarErrorDeUbicación(false, map.getCenter(), map);
+        }
     }
+
+    setCurrentPosition();
 
     const input = document.createElement("input");
     input.id = "pac-input";
@@ -77,19 +86,55 @@ window.initMap = function() {
     });
 
     const ubicaciones = {
-        sura: "Sura",
-        nuevaeps: "Nueva EPS",
-        saludtotal: "Salud Total",
-        coomeva: "Coomeva",
-        hospital: "Hospital"
+        "sisben-btn": "sura",
+        "nuevaeps-btn": "Nueva EPS",
+        "saludtotal-btn": "Salud Total",
+        "coomeva-btn": "Coomeva",
+        "hospital-btn": "Hospital"
     };
 
     for (const [id, nombreUbicacion] of Object.entries(ubicaciones)) {
         document.getElementById(id).addEventListener("click", () => {
             input.value = nombreUbicacion;
-            google.maps.event.trigger(searchBox, 'places_changed');
+            const placesService = new google.maps.places.PlacesService(map);
+            placesService.textSearch({ query: nombreUbicacion }, (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                    markers.forEach((marker) => marker.setMap(null));
+                    markers = [];
+
+                    const bounds = new google.maps.LatLngBounds();
+
+                    results.forEach((place) => {
+                        if (!place.geometry || !place.geometry.location) {
+                            console.log("El lugar devuelto no contiene geometría");
+                            return;
+                        }
+
+                        const newMarker = new google.maps.Marker({
+                            map: map,
+                            title: place.name,
+                            position: place.geometry.location,
+                        });
+
+                        markers.push(newMarker);
+
+                        if (place.geometry.viewport) {
+                            bounds.union(place.geometry.viewport);
+                        } else {
+                            bounds.extend(place.geometry.location);
+                        }
+                    });
+                    map.fitBounds(bounds);
+                }
+            });
         });
     }
+
+    const currentLocationButton = document.createElement("button");
+    currentLocationButton.textContent = "Mi Ubicación";
+    currentLocationButton.className = "custom-map-control-button";
+    currentLocationButton.addEventListener("click", setCurrentPosition);
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(currentLocationButton);
 };
 
 function manejarErrorDeUbicación(browserHasGeolocation, pos, map) {

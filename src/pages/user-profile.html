@@ -3,103 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi perfíl</title>
+    <title>Mi perfil</title>
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/mainlogo.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap" rel="stylesheet" />
 </head>
-<body>
-    <h1>Perfíl de usuario</h1>
-    <form id="edit-profile-form">
-        <label for="document">Documento:</label>
-        <input type="text" id="document" name="document" readonly><br><br>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-customPurple p-5 flex items-center justify-between border-b-4 border-black">
+        <div class="flex items-center">
+            <img src="/mainlogo.png" alt="Logo" class="w-12 h-12 mr-3" />
+            <h1 class="font-aclonica text-white text-4xl">Supra Eps</h1>
+        </div>
+        <div class="flex space-x-4">
+            <a href="user-profile.html">
+                <button id="profile-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Mi perfil</button>
+            </a>
+            <a href="main.html">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Volver</button>
+            </a>
+        </div>
+    </header>
 
-        <label for="username">Nombre:</label>
-        <input type="text" id="username" name="username" readonly><br><br>
+    <main class="p-5 flex-1">
+        <h1 class="text-4xl font-bold mb-6">Perfil de usuario</h1>
+        <form id="edit-profile-form" class="space-y-6 bg-white p-6 rounded-lg shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="document" class="block font-medium text-gray-700">Documento:</label>
+                    <input type="text" id="document" name="document" readonly class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100" />
+                </div>
+                <div>
+                    <label for="username" class="block font-medium text-gray-700">Nombre:</label>
+                    <input type="text" id="username" name="username" readonly class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100" />
+                </div>
+                <div>
+                    <label for="email" class="block font-medium text-gray-700">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg" />
+                </div>
+                <div>
+                    <label for="phone" class="block font-medium text-gray-700">Número de teléfono:</label>
+                    <input type="text" id="phone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg" />
+                </div>
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Guardar cambios</button>
 
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="phone">Número de teléfono:</label>
-        <input type="text" id="phone" name="phone"><br><br>
-
-        <button type="submit">Guardar cambios</button>
-
-        <h3>Historia clínica</h3>
-        <label for="allergies">Alergias:</label>
-        <p id="allergies" name="allergies"></p><br><br>
-
-        <label for="illnesses">Enfermedades:</label>
-        <p id="illnesses" name="illnesses"></p><br><br>
-
-        <label for="surgeries">Cirugías:</label>
-        <p id="surgeries" name="surgeries"></p><br><br>
-
-        <label for="familyHistory">Antecedentes familiares</label>
-        <p id="familyHistory" name="familyHistory"></p><br><br>
-    </form>
+            <section class="mt-8">
+                <h3 class="text-2xl font-semibold mb-4">Historia clínica</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label for="allergies" class="block font-medium text-gray-700">Alergias:</label>
+                        <p id="allergies" name="allergies" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                    </div>
+                    <div>
+                        <label for="illnesses" class="block font-medium text-gray-700">Enfermedades:</label>
+                        <p id="illnesses" name="illnesses" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                    </div>
+                    <div>
+                        <label for="surgeries" class="block font-medium text-gray-700">Cirugías:</label>
+                        <p id="surgeries" name="surgeries" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                    </div>
+                    <div>
+                        <label for="familyHistory" class="block font-medium text-gray-700">Antecedentes familiares:</label>
+                        <p id="familyHistory" name="familyHistory" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </main>
 
     <script type="module">
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
         import { getDatabase, ref, set, onValue, update, remove, query, orderByChild, equalTo, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
         const firebaseConfig = {
-        apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
-        authDomain: "supra-eps.firebaseapp.com",
-        databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
-        projectId: "supra-eps",
-        storageBucket: "supra-eps.appspot.com",
-        messagingSenderId: "432086709372",
-        appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
-        measurementId: "G-8K3XYXSMX1"
+            apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
+            authDomain: "supra-eps.firebaseapp.com",
+            databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
+            projectId: "supra-eps",
+            storageBucket: "supra-eps.appspot.com",
+            messagingSenderId: "432086709372",
+            appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
+            measurementId: "G-8K3XYXSMX1"
         };
     
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        const database = getDatabase()
+        const database = getDatabase();
 
         const editProfileForm = document.getElementById('edit-profile-form');
 
         const userDocument = localStorage.getItem('userId');
 
-        const userRef = ref(database, 'users/' + userDocument);
-        get(userRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const userData = snapshot.val();
-                document.getElementById('document').value = userDocument;
-                document.getElementById('email').value = userData.email || '';
-                document.getElementById('username').value = userData.name || '';
-                document.getElementById('phone').value = userData.phone || '';
-                document.getElementById('allergies').textContent = userData.clinicalHistory?.allergies || '';
-                document.getElementById('illnesses').textContent = userData.clinicalHistory?.illnesses || '';
-                document.getElementById('surgeries').textContent = userData.clinicalHistory?.surgeries || '';
-                document.getElementById('familyHistory').textContent = userData.clinicalHistory?.familyHistory || '';
-            } else {
-                alert('User data not found!');
-            }
-        }).catch((error) => {
-            alert('Error: ' + error.message);
-        });
+        if (userDocument) {
+            const userRef = ref(database, 'users/' + userDocument);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    document.getElementById('document').value = userDocument;
+                    document.getElementById('email').value = userData.email || '';
+                    document.getElementById('username').value = userData.name || '';
+                    document.getElementById('phone').value = userData.phone || '';
+                    document.getElementById('allergies').textContent = userData.clinicalHistory?.allergies || '';
+                    document.getElementById('illnesses').textContent = userData.clinicalHistory?.illnesses || '';
+                    document.getElementById('surgeries').textContent = userData.clinicalHistory?.surgeries || '';
+                    document.getElementById('familyHistory').textContent = userData.clinicalHistory?.familyHistory || '';
+                } else {
+                    alert('User data not found!');
+                }
+            }).catch((error) => {
+                alert('Error: ' + error.message);
+            });
+        } else {
+            alert('No user document found in local storage.');
+        }
 
         editProfileForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const emailValue = document.getElementById('email').value;
             const phoneValue = document.getElementById('phone').value;
-            const allergiesValue = document.getElementById('allergies').value;
-            const illnessesValue = document.getElementById('illnesses').value;
-            const surgeriesValue = document.getElementById('surgeries').value;
-            const familyHistoryValue = document.getElementById('familyHistory').value;
+            const allergiesValue = document.getElementById('allergies').textContent;
+            const illnessesValue = document.getElementById('illnesses').textContent;
+            const surgeriesValue = document.getElementById('surgeries').textContent;
+            const familyHistoryValue = document.getElementById('familyHistory').textContent;
 
-            update(userRef, {
-                email: emailValue,
-                phone: phoneValue,
-            })
-            .then(() => {
-                alert('Perfíl actualizado exitosamente');
-            })
-            .catch((error) => {
-                alert('Error: ' + error.message);
-            });
+            if (userDocument) {
+                const userRef = ref(database, 'users/' + userDocument);
+                update(userRef, {
+                    email: emailValue,
+                    phone: phoneValue,
+                    'clinicalHistory/allergies': allergiesValue,
+                    'clinicalHistory/illnesses': illnessesValue,
+                    'clinicalHistory/surgeries': surgeriesValue,
+                    'clinicalHistory/familyHistory': familyHistoryValue
+                })
+                .then(() => {
+                    alert('Perfil actualizado exitosamente');
+                })
+                .catch((error) => {
+                    alert('Error: ' + error.message);
+                });
+            } else {
+                alert('No user document found in local storage.');
+            }
         });
     </script>
 </body>

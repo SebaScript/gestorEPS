@@ -1,42 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/medicLogo.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/pages/tailwind.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap"
-    rel="stylesheet"
-  />
-  <title>Supra Eps</title>
-</head>
-<body>
-  <div class="flex h-screen">
-    <div class="w-1/2 border-r border-black p-4 flex flex-col justify-start items-start">
-      <h1 class="font-aculonica text-7xl text-black bg-gradient-to-r from-purple-00 via-transparent to-transparent">Supra<br>Eps</h1>
-      <img src="/mainlogo.png" alt="Logo" class="w-1/3 h-1/3 mt-4">
-    </div>
-    <div class="w-1/2 bg-purple-500 flex flex-col justify-center items-center relative">
-      <div class="mb-8 text-white text-2xl font-bold">
-        Bienvenidos a Supra Eps
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/medicLogo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/pages/tailwind.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap"
+      rel="stylesheet"
+    />
+    <title class="font-aclonica">Supra Eps</title>
+  </head>
+
+  <body
+    class="bg-gradient-to-b from-purple-900 to-customPurple h-screen flex items-center justify-center"
+  >
+    <div
+      class="flex h-4/5 w-11/12 lg:w-3/4 bg-white rounded-lg shadow-lg overflow-hidden"
+    >
+      <div class="w-1/2 bg-white p-6 flex flex-col justify-center items-center">
+        <h1 class="font-aclonica text-7xl text-customPurple mb-6">
+          Supra<br />Eps
+        </h1>
+        <img src="/mainlogin.png" alt="Logo" class="w-2/4 h-auto" />
       </div>
-      <a href="login.html">
-        <button class="bg-teal-600 hover:bg-blue-700 py-2 px-4 mb-4 group group-hover:before:duration-500 group-hover:after:duration-500 after:duration-500 hover:border-rose-300 hover:before:[box-shadow:_20px_20px_20px_30px_#a21caf] duration-500 before:duration-500 hover:duration-500 underline underline-offset-2 hover:after:-right-8 hover:before:right-12 hover:before:-bottom-8 hover:before:blur hover:underline hover:underline-offset-4 origin-left hover:decoration-2 hover:text-rose-300 relative h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg overflow-hidden before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-violet-500 before:rounded-full before:blur-lg after:absolute after:z-10 after:w-20 after:h-20 after:content[''] after:bg-rose-300 after:right-8 after:top-3 after:rounded-full after:blur-lg">
-          Iniciar Sesión
-        </button>
-      </a>
-      <a href="sign-up.html">
-        <button class="bg-blue-500 hover:bg-red-700 py-2 px-4 mb-4 group group-hover:before:duration-500 group-hover:after:duration-500 after:duration-500 hover:border-rose-300 hover:before:[box-shadow:_20px_20px_20px_30px_#a21caf] duration-500 before:duration-500 hover:duration-500 underline underline-offset-2 hover:after:-right-8 hover:before:right-12 hover:before:-bottom-8 hover:before:blur hover:underline hover:underline-offset-4 origin-left hover:decoration-2 hover:text-rose-300 relative h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg overflow-hidden before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-violet-500 before:rounded-full before:blur-lg after:absolute after:z-10 after:w-20 after:h-20 after:content[''] after:bg-rose-300 after:right-8 after:top-3 after:rounded-full after:blur-lg">
-          Crear Cuenta
-        </button>
-      </a>
-      <div class="absolute bottom-2 right-2 text-white text-sm bold">
-        &copy; 2024 Supra Eps
+      <div
+        class="w-1/2 bg-gradient-to-b from-customPurple to-pink-800 flex flex-col justify-center items-center relative"
+      >
+        <h2 class="text-white text-2xl font-bold mb-8">Iniciar sesión</h2>
+        <form
+          id="login-form"
+          class="bg-white p-8 rounded-lg shadow-md w-3/4 max-w-sm"
+        >
+          <div class="mb-4">
+            <label for="document" class="block text-gray-700 font-bold mb-2"
+              >Documento</label
+            >
+            <input
+              type="text"
+              id="document"
+              name="document"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="mb-6">
+            <label for="password" class="block text-gray-700 font-bold mb-2"
+              >Contraseña</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Ingresar
+            </button>
+          </div>
+        </form>
+        <a
+          href="sign-up.html"
+          class="absolute bottom-2 right-2 text-white text-sm font-bold"
+        >
+          ¿No tienes una cuenta? Regístrate aquí
+        </a>
+        <div class="absolute bottom-2 left-2 text-white text-sm font-bold">
+          &copy; 2024 Supra Eps
+        </div>
       </div>
     </div>
-  </div>
-</body>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+      } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
+        authDomain: "supra-eps.firebaseapp.com",
+        databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
+        projectId: "supra-eps",
+        storageBucket: "supra-eps.appspot.com",
+        messagingSenderId: "432086709372",
+        appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
+        measurementId: "G-8K3XYXSMX1",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const database = getDatabase(app);
+
+      const loginForm = document.getElementById("login-form");
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const documentValue = document.getElementById("document").value;
+        const passwordValue = document.getElementById("password").value;
+
+        const userRef = ref(database, "users/" + documentValue);
+        get(userRef)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const userData = snapshot.val();
+              if (userData.password === passwordValue) {
+                localStorage.setItem("userId", documentValue);
+                window.location.href = "main.html";
+              } else {
+                alert("Contraseña incorrecta");
+              }
+            } else {
+              alert(
+                "No se encontró el usuario, verifica la información o regístrate"
+              );
+            }
+          })
+          .catch((error) => {
+            alert("Error: " + error.message);
+          });
+      });
+    </script>
+  </body>
 </html>

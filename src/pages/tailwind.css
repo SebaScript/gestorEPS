@@ -2,11 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html, body {
-    height: 100%;
-    margin: 0;
-  }
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Jost', sans-serif; /* Asegúrate de que esta fuente se aplique globalmente si es necesario */
+}
 
 /* Estilo base del botón */
 .btn-base {
@@ -15,115 +22,42 @@ html, body {
 
 /* Variantes de color */
 .btn-blue {
-  @apply btn-base; /* Aplica el estilo base del botón */
-  @apply from-blue-500 via-blue-600 to-blue-700; /* Color azul */
-  @apply shadow-blue-500/50 dark:shadow-blue-800/80;
+  @apply btn-base from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 dark:shadow-blue-800/80;
 }
 
 .btn-red {
-  @apply btn-base; /* Aplica el estilo base del botón */
-  @apply from-red-500 via-red-600 to-red-700; /* Color rojo */
-  @apply shadow-red-500/50 dark:shadow-red-800/80;
+  @apply btn-base from-red-500 via-red-600 to-red-700 shadow-red-500/50 dark:shadow-red-800/80;
 }
 
 .btn-green {
-  @apply btn-base; /* Aplica el estilo base del botón */
-  @apply from-teal-500 via-teal-600 to-green-700; /* Color verde */
-  @apply shadow-green-500/50 dark:shadow-green-800/80;
+  @apply btn-base from-teal-500 via-teal-600 to-green-700 shadow-green-500/50 dark:shadow-green-800/80;
 }
 
 .btn-yellow {
-  @apply btn-base; /* Aplica el estilo base del botón */
-  @apply from-yellow-500 via-yellow-600 to-yellow-700; /* Color amarillo */
-  @apply shadow-yellow-500/50 dark:shadow-yellow-800/80;
+  @apply btn-base from-yellow-500 via-yellow-600 to-yellow-700 shadow-yellow-500/50 dark:shadow-yellow-800/80;
 }
 
 .btn-purple {
-  @apply btn-base; /* Aplica el estilo base del botón */
-  @apply from-purple-500 via-purple-600 to-purple-700; /* Color morado */
-  @apply shadow-purple-500/50 dark:shadow-purple-800/80;
+  @apply btn-base from-purple-500 via-purple-600 to-purple-700 shadow-purple-500/50 dark:shadow-purple-800/80;
 }
 
-
-/* Login */
-
-#contenedor {
+/* Estilos específicos para el layout de main.html */
+.main-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
 
-#contenedor > div {
-  width: 50%;
+.welcome-banner {
+  width: 400px; /* Ajusta el tamaño según sea necesario */
+  height: 500px;
+  background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/cover;
+  border-radius: 10px;
+  box-shadow: 5px 20px 50px #000;
 }
 
-#contenedor #divPortada {
-  height: 100vh;
-  display: flex;
-  margin: auto;
-}
-
-#contenedor #divPortada #title {
-  position: absolute;
-  top: 50%;
-  left: 25%;
-  transform: translateX(-50%); 
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 80px;
-  font-weight: bold;
-}
-
-#contenedor #divLogin {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Asegúrate de que el contenedor tenga una altura definida */
-}
-
-#contenedor #divLogin #h1Login{
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 80px;
-  font-weight: bold;
-  display: flex;
-  align-self: flex-start;
-}
-
-#contenedor #divLogin #buttonLogin {
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  justify-content: center;
-  display: flex;
-  background-color: #04AA6D; 
-  padding: 15px 32px;
-  font-size: 16px;
-}
-
-
-#login-button {
-  background: linear-gradient(to right, #3b82f6, #a855f7); /* Degradado de azul a morado */
-  color: white; /* Texto blanco */
-  padding: 1.5rem; /* Padding grande */
-  border-radius: 0.5rem; /* Bordes redondeados */
-  font-size: 1.875rem; /* Tamaño de texto grande */
-  transition: background 0.3s ease; /* Transición suave para el hover */
-}
-
-#login-button:hover {
-  background: linear-gradient(to right, #2563eb, #9333ea); /* Degradado más oscuro al pasar el cursor */
-}
-
-.gradient-top-right {
-  position: relative;
-}
-
-.gradient-top-right::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 50%;
-  background: linear-gradient(to bottom left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-  pointer-events: none;
-  z-index: 1;
+/* Estilo para los botones de acción */
+.action-button {
+  @apply text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center;
 }

@@ -9,8 +9,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        aculonica: ['Aclonica', 'sans-serif'],
+        aclonica: ['Aclonica', 'sans-serif'],
         ubuntu: ['Ubuntu', 'sans-serif'],
+      },
+      colors: {
+        customPurple: '#573b8a',
       },
     },
   },
