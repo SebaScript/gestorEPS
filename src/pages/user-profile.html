@@ -49,29 +49,34 @@
                 </div>
             </div>
             <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Guardar cambios</button>
-
-            <section class="mt-8">
-                <h3 class="text-2xl font-semibold mb-4">Historia clínica</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label for="allergies" class="block font-medium text-gray-700">Alergias:</label>
-                        <p id="allergies" name="allergies" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
-                    </div>
-                    <div>
-                        <label for="illnesses" class="block font-medium text-gray-700">Enfermedades:</label>
-                        <p id="illnesses" name="illnesses" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
-                    </div>
-                    <div>
-                        <label for="surgeries" class="block font-medium text-gray-700">Cirugías:</label>
-                        <p id="surgeries" name="surgeries" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
-                    </div>
-                    <div>
-                        <label for="familyHistory" class="block font-medium text-gray-700">Antecedentes familiares:</label>
-                        <p id="familyHistory" name="familyHistory" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
-                    </div>
-                </div>
-            </section>
         </form>
+
+        <section>
+            <h2>Tus citas médicas</h2>
+            <div id="user-appointments-container"></div>
+        </section>
+
+        <section class="mt-8">
+            <h3 class="text-2xl font-semibold mb-4">Historia clínica</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="allergies" class="block font-medium text-gray-700">Alergias:</label>
+                    <p id="allergies" name="allergies" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                </div>
+                <div>
+                    <label for="illnesses" class="block font-medium text-gray-700">Enfermedades:</label>
+                    <p id="illnesses" name="illnesses" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                </div>
+                <div>
+                    <label for="surgeries" class="block font-medium text-gray-700">Cirugías:</label>
+                    <p id="surgeries" name="surgeries" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                </div>
+                <div>
+                    <label for="familyHistory" class="block font-medium text-gray-700">Antecedentes familiares:</label>
+                    <p id="familyHistory" name="familyHistory" class="p-3 border border-gray-300 rounded-lg bg-gray-100"></p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script type="module">
@@ -98,6 +103,9 @@
 
         const userDocument = localStorage.getItem('userId');
 
+        const userAppointmentsContainer = document.getElementById('user-appointments-container');
+        const userAppointmentsRef = ref(database, `users/${userDocument}/appointments`);
+
         if (userDocument) {
             const userRef = ref(database, 'users/' + userDocument);
             get(userRef).then((snapshot) => {
@@ -112,13 +120,13 @@
                     document.getElementById('surgeries').textContent = userData.clinicalHistory?.surgeries || '';
                     document.getElementById('familyHistory').textContent = userData.clinicalHistory?.familyHistory || '';
                 } else {
-                    alert('User data not found!');
+                    alert('No se encontraron datos del usuario');
                 }
             }).catch((error) => {
                 alert('Error: ' + error.message);
             });
         } else {
-            alert('No user document found in local storage.');
+            alert('No se encontró el documento del usuario');
         }
 
         editProfileForm.addEventListener('submit', (e) => {
@@ -148,9 +156,58 @@
                     alert('Error: ' + error.message);
                 });
             } else {
-                alert('No user document found in local storage.');
+                alert('No se encontró el usuario');
             }
         });
+
+        get(userAppointmentsRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const appointments = snapshot.val();
+                for (const [key, value] of Object.entries(appointments)) {
+                    const appointmentDiv = document.createElement('div');
+                    appointmentDiv.setAttribute('data-id', key);
+                    appointmentDiv.innerHTML = `
+                        <p>Fecha: ${value.date}</p>
+                        <p>Hora: ${value.time}</p>
+                        <p>Sede: ${value.headquarter}</p>
+                        <p>Especialista: ${value.specialist}</p>
+                        <p>Especialidad: ${value.speciality}</p>
+                        <button onclick="cancelAppointment('${key}')">Cancelar cita</button>
+                        <hr>
+                    `;
+                    userAppointmentsContainer.appendChild(appointmentDiv);
+                }
+            } else {
+                userAppointmentsContainer.innerHTML = 'No tienes citas médicas asignadas';
+            }
+        }).catch((error) => {
+            alert('Error: ' + error.message);
+        });
+
+        window.cancelAppointment = (appointmentId) => {
+            const selectedAppointment = document.querySelector(`div[data-id='${appointmentId}']`);
+            const appointmentData = {
+                date: selectedAppointment.querySelector('p:nth-child(1)').textContent.split(': ')[1],
+                time: selectedAppointment.querySelector('p:nth-child(2)').textContent.split(': ')[1],
+                headquarter: selectedAppointment.querySelector('p:nth-child(3)').textContent.split(': ')[1],
+                specialist: selectedAppointment.querySelector('p:nth-child(4)').textContent.split(': ')[1],
+                speciality: selectedAppointment.querySelector('p:nth-child(5)').textContent.split(': ')[1],
+                eps: localStorage.getItem('usereps')
+            };
+
+            const availableAppointmentRef = ref(database, `available-appointments/${appointmentId}`);
+            set(availableAppointmentRef, appointmentData).then(() => {
+                const userAppointmentRef = ref(database, `users/${userDocument}/appointments/${appointmentId}`);
+                remove(userAppointmentRef).then(() => {
+                    alert('Cita cancelada exitosamente');
+                    selectedAppointment.remove();
+                }).catch((error) => {
+                    alert('Error removiendo cita: ' + error.message);
+                });
+            }).catch((error) => {
+                alert('Error almacenando cita en citas-disponibles: ' + error.message);
+            });
+        };
     </script>
 </body>
 </html>

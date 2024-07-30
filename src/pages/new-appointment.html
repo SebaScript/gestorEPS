@@ -3,9 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Appointment</title>
+    <title>Appointments</title>
 </head>
 <body>
-    <h1>New Appointment</h1>
+    <h2>Citas disponibles</h2>
+    <div id="appointments-container"></div>
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: "mF9NvemI9aVuX1G8L",
+        });
+    })();
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+        import { getDatabase, ref, set, onValue, remove, query, orderByChild, equalTo, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
+            authDomain: "supra-eps.firebaseapp.com",
+            databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
+            projectId: "supra-eps",
+            storageBucket: "supra-eps.appspot.com",
+            messagingSenderId: "432086709372",
+            appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
+            measurementId: "G-8K3XYXSMX1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase()
+
+        const userDocument = localStorage.getItem('userId');
+        const userEmail = localStorage.getItem('useremail');
+        const userName = localStorage.getItem("username")
+        const userEps = localStorage.getItem('usereps')
+
+        const appointmentsContainer = document.getElementById('appointments-container');
+
+        const appointmentsRef = ref(database, 'available-appointments');
+        get(appointmentsRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const appointments = snapshot.val();
+                let available = false
+                for (const [key, value] of Object.entries(appointments)) {
+                    if (value.eps === userEps) {
+                    available = true
+                    const appointmentDiv = document.createElement('div');
+                    appointmentDiv.setAttribute('data-id', key);
+                    appointmentDiv.innerHTML = `
+                        <p>Fecha: ${value.date}</p>
+                        <p>Hora: ${value.time}</p>
+                        <p>Sede: ${value.headquarter}</p>
+                        <p>Especialista: ${value.specialist}</p>
+                        <p>Especialidad: ${value.speciality}</p>
+                        <button onclick="bookAppointment('${key}')">Agendar cita</button>
+                        <hr>
+                    `;
+                    appointmentsContainer.appendChild(appointmentDiv);
+                    }
+                }
+
+                if (!available) {
+                    appointmentsContainer.innerHTML = 'No hay citas disponibles';
+                }
+            } else {
+                appointmentsContainer.innerHTML = 'No hay citas disponibles';
+            }
+        }).catch((error) => {
+            alert('Error: ' + error.message);
+        });
+
+        window.bookAppointment = (appointmentId) => {
+            const selectedAppointment = document.querySelector(`div[data-id='${appointmentId}']`);
+            const appointmentData = {
+                date: selectedAppointment.querySelector('p:nth-child(1)').textContent.split(': ')[1],
+                time: selectedAppointment.querySelector('p:nth-child(2)').textContent.split(': ')[1],
+                headquarter: selectedAppointment.querySelector('p:nth-child(3)').textContent.split(': ')[1],
+                specialist: selectedAppointment.querySelector('p:nth-child(4)').textContent.split(': ')[1],
+                speciality: selectedAppointment.querySelector('p:nth-child(5)').textContent.split(': ')[1],
+                eps: localStorage.getItem('usereps')
+            };
+
+            const userAppointmentRef = ref(database, `users/${userDocument}/appointments/${appointmentId}`);
+            set(userAppointmentRef, appointmentData).then(() => {
+                const appointmentRef = ref(database, `available-appointments/${appointmentId}`);
+                remove(appointmentRef).then(() => {
+                    alert('Cita agendada exitosamente');
+                    selectedAppointment.remove();
+
+                    emailjs.send("service_u46mzfk", "template_o6440xl", {
+                        to_email: userEmail,
+                        user_name: userName,
+                        date: appointmentData.date,
+                        specialist: appointmentData.specialist,
+                        speciality: appointmentData.speciality,
+                        time: appointmentData.time,
+                    }).then((response) => {
+                        console.log('Email enviado exitosamente', response.status, response.text);
+                    }).catch((error) => {
+                        console.error('Error al enviar el email', error);
+                    });
+                }).catch((error) => {
+                    alert('Error removiendo cita' + error.message);
+                });
+            }).catch((error) => {
+                alert('Error agendando cita' + error.message);
+            });
+        };
+    </script>
 </body>
 </html>

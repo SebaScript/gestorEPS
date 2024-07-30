@@ -71,7 +71,7 @@
           href="sign-up.html"
           class="absolute bottom-2 right-2 text-white text-sm font-bold"
         >
-          ¿No tienes una cuenta? Regístrate aquí
+          ¿No tienes una cuenta? <span class="underline">Regístrate aquí</span>
         </a>
         <div class="absolute bottom-2 left-2 text-white text-sm font-bold">
           &copy; 2024 Supra Eps
@@ -80,15 +80,10 @@
     </div>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-      import {
-        getDatabase,
-        ref,
-        get,
-      } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-
-      const firebaseConfig = {
+              import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+        import { getDatabase, ref, set, onValue, remove, query, orderByChild, equalTo, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        const firebaseConfig = {
         apiKey: "AIzaSyBEohqZ-x6qn52OtuDdkWNcIzJg_1q7iGk",
         authDomain: "supra-eps.firebaseapp.com",
         databaseURL: "https://supra-eps-default-rtdb.firebaseio.com",
@@ -96,42 +91,42 @@
         storageBucket: "supra-eps.appspot.com",
         messagingSenderId: "432086709372",
         appId: "1:432086709372:web:896f62fabb04cf01cf05f9",
-        measurementId: "G-8K3XYXSMX1",
-      };
+        measurementId: "G-8K3XYXSMX1"
+        };
 
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const database = getDatabase(app);
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase()
 
-      const loginForm = document.getElementById("login-form");
+        const loginForm = document.getElementById('login-form');
 
-      loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        const documentValue = document.getElementById("document").value;
-        const passwordValue = document.getElementById("password").value;
+            const documentValue = document.getElementById('document').value;
+            const passwordValue = document.getElementById('password').value;
 
-        const userRef = ref(database, "users/" + documentValue);
-        get(userRef)
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-              const userData = snapshot.val();
-              if (userData.password === passwordValue) {
-                localStorage.setItem("userId", documentValue);
-                window.location.href = "main.html";
-              } else {
-                alert("Contraseña incorrecta");
-              }
-            } else {
-              alert(
-                "No se encontró el usuario, verifica la información o regístrate"
-              );
-            }
-          })
-          .catch((error) => {
-            alert("Error: " + error.message);
-          });
-      });
+            const userRef = ref(database, 'users/' + documentValue);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === passwordValue) {
+                        localStorage.setItem('userId', documentValue)
+                        localStorage.setItem('usereps', userData.eps)
+                        localStorage.setItem('username', userData.name)
+                        localStorage.setItem('useremail', userData.email)
+                        console.log(localStorage.getItem('usereps'))
+                        window.open("main.html")
+                    } else {
+                        alert('Contraseña incorrecta');
+                    }
+                } else {
+                    alert('No se encontró el usuario, verifica la información o registrate');
+                }
+            }).catch((error) => {
+                alert('Error: ' + error.message);
+            });
+        });
     </script>
   </body>
 </html>
